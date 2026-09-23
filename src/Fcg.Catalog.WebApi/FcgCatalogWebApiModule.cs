@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+using Fcg.Catalog.Application._Shared.Security;
 using Fcg.Catalog.Domain._Shared.Modules;
 using Fcg.Catalog.Infrastructure._Shared.Context;
 using Fcg.Catalog.WebApi._Shared.Endpoints;
@@ -15,6 +17,10 @@ public sealed class FcgCatalogWebApiModule : IModule
         services.AddProblemDetails();
         services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddOpenApi();
+        services.ConfigureHttpJsonOptions(options => options.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
+        services.AddHttpContextAccessor();
+        services.AddScoped<ICurrentUser, HttpContextCurrentUser>();
 
         services.AddJwtAuthentication(configuration);
         services.AddMessaging(configuration);
