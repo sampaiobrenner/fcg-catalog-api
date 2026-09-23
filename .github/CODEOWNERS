@@ -1,0 +1,7 @@
+# Revisores solicitados automaticamente nos PRs (ver wiki > Como trabalhamos).
+# Responsavel pela frente catalog-api:
+*                 @pauloffalves1
+# Plataforma (Docker, Kubernetes e CI) revisa junto:
+/Dockerfile       @pauloffalves1 @sampaiobrenner
+/k8s/             @pauloffalves1 @sampaiobrenner
+/.github/         @sampaiobrenner
