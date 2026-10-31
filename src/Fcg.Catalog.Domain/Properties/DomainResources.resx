@@ -15,4 +15,34 @@
   <data name="CampoObrigatorio" xml:space="preserve">
     <value>O campo {0} é obrigatório.</value>
   </data>
+  <data name="ValorMonetarioNegativo" xml:space="preserve">
+    <value>O valor monetário não pode ser negativo.</value>
+  </data>
+  <data name="MoedaObrigatoria" xml:space="preserve">
+    <value>A moeda é obrigatória.</value>
+  </data>
+  <data name="DescontoInvalido" xml:space="preserve">
+    <value>O desconto deve estar entre 0 e 100%.</value>
+  </data>
+  <data name="TituloDoJogoObrigatorio" xml:space="preserve">
+    <value>O título do jogo é obrigatório.</value>
+  </data>
+  <data name="GeneroDoJogoObrigatorio" xml:space="preserve">
+    <value>O gênero do jogo é obrigatório.</value>
+  </data>
+  <data name="NomeDaPromocaoObrigatorio" xml:space="preserve">
+    <value>O nome da promoção é obrigatório.</value>
+  </data>
+  <data name="DataDeTerminoInvalida" xml:space="preserve">
+    <value>A data de término deve ser posterior à data de início.</value>
+  </data>
+  <data name="PromocaoSemJogos" xml:space="preserve">
+    <value>A promoção deve conter ao menos um jogo.</value>
+  </data>
+  <data name="TransicaoDePedidoInvalida" xml:space="preserve">
+    <value>O pedido está {0} e só pode ser concluído ou recusado enquanto estiver Pending.</value>
+  </data>
+  <data name="PagamentoRecusadoSemMotivo" xml:space="preserve">
+    <value>Pagamento recusado.</value>
+  </data>
 </root>

@@ -15,4 +15,34 @@
   <data name="RecursoNaoEncontrado" xml:space="preserve">
     <value>{0} '{1}' não encontrado(a).</value>
   </data>
+  <data name="Jogo" xml:space="preserve">
+    <value>Jogo</value>
+  </data>
+  <data name="Promocao" xml:space="preserve">
+    <value>Promoção</value>
+  </data>
+  <data name="JogoComTituloJaCadastrado" xml:space="preserve">
+    <value>Já existe um jogo com o título '{0}'.</value>
+  </data>
+  <data name="UsuarioNaoAutenticado" xml:space="preserve">
+    <value>Usuário não autenticado.</value>
+  </data>
+  <data name="DataDeTerminoInvalida" xml:space="preserve">
+    <value>A data de término deve ser posterior à data de início.</value>
+  </data>
+  <data name="PromocaoSemJogos" xml:space="preserve">
+    <value>Informe ao menos um jogo para a promoção.</value>
+  </data>
+  <data name="PrecoMaximoMenorQueMinimo" xml:space="preserve">
+    <value>O preço máximo deve ser maior ou igual ao preço mínimo.</value>
+  </data>
+  <data name="Pedido" xml:space="preserve">
+    <value>Pedido</value>
+  </data>
+  <data name="JogoJaNaBiblioteca" xml:space="preserve">
+    <value>Jogo já está na biblioteca.</value>
+  </data>
+  <data name="PedidoEmAndamento" xml:space="preserve">
+    <value>Já existe um pedido em andamento para este jogo.</value>
+  </data>
 </root>

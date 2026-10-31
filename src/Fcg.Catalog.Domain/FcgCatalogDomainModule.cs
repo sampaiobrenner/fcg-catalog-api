@@ -1,4 +1,5 @@
 using Fcg.Catalog.Domain._Shared.Modules;
+using Fcg.Catalog.Domain.Pricing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,5 +9,6 @@ public sealed class FcgCatalogDomainModule : IModule
 {
     public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
+        services.AddSingleton<PricingService>();
     }
 }

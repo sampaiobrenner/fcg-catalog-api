@@ -1,4 +1,5 @@
 using Fcg.Catalog.Application._Shared.Behaviors;
+using Fcg.Catalog.Application._Shared.Parsers;
 using Fcg.Catalog.Domain._Shared.Modules;
 using FluentValidation;
 using MediatR;
@@ -20,5 +21,6 @@ public sealed class FcgCatalogApplicationModule : IModule
         });
 
         services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
+        services.AddParsers(assembly);
     }
 }

@@ -4,6 +4,8 @@ using Fcg.Catalog.WebApi._Shared.Errors;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 
@@ -31,6 +33,7 @@ public class GlobalExceptionHandlerTests
         { new NotFoundException("Jogo", Guid.Empty), StatusCodes.Status404NotFound },
         { new ConflictException("duplicado"), StatusCodes.Status409Conflict },
         { new BusinessException("regra"), StatusCodes.Status422UnprocessableEntity },
+        { new DbUpdateException("duplicado", new PostgresException("duplicate key", "ERROR", "ERROR", PostgresErrorCodes.UniqueViolation)), StatusCodes.Status409Conflict },
         { new InvalidOperationException("falha"), StatusCodes.Status500InternalServerError }
     };
 
