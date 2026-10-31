@@ -38,8 +38,9 @@ public class OrdersEndpointsTests
         response.Headers.Location!.ToString().Should().Be($"/api/v1/orders/{body.OrderId}");
         (await response.Content.ReadAsStringAsync()).Should().Contain("\"status\":\"Pending\"");
 
-        (await _factory.Harness.Published.Any<OrderPlacedEvent>(context => context.Context.Message.OrderId == body.OrderId))
-            .Should().BeTrue();
+        // Polling em vez de Published.Any: o outbox entrega de forma assincrona e o harness e compartilhado entre testes.
+        (await Eventually.TrueAsync(() => Task.FromResult(_factory.Harness.Published
+            .Select<OrderPlacedEvent>(context => context.Context.Message.OrderId == body.OrderId).Any()))).Should().BeTrue();
         var published = _factory.Harness.Published.Select<OrderPlacedEvent>()
             .Single(context => context.Context.Message.OrderId == body.OrderId).Context.Message;
         published.UserId.Should().Be(userId);

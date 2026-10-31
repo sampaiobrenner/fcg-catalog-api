@@ -27,6 +27,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Copias dos samples do fcg-contracts (fonte de verdade do payload). -->
+    <None Update="_Fixtures\Samples\*.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\Fcg.Catalog.WebApi\Fcg.Catalog.WebApi.csproj" />
   </ItemGroup>
 

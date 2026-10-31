@@ -72,7 +72,10 @@ public sealed class CatalogApiFactory : WebApplicationFactory<Program>, IAsyncLi
         builder.UseSetting("Jwt:Audience", TestJwtFactory.Audience);
 
         builder.ConfigureTestServices(services => services.AddMassTransitTestHarness(bus =>
-            bus.SetTestTimeouts(testTimeout: TimeSpan.FromSeconds(30), testInactivityTimeout: TimeSpan.FromSeconds(5))));
+        {
+            bus.SetTestTimeouts(testTimeout: TimeSpan.FromSeconds(30), testInactivityTimeout: TimeSpan.FromSeconds(5));
+            bus.AddConsumer<OrderPlacedProbeConsumer>();
+        }));
     }
 }
 
