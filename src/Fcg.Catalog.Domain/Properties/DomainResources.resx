@@ -39,4 +39,10 @@
   <data name="PromocaoSemJogos" xml:space="preserve">
     <value>A promoção deve conter ao menos um jogo.</value>
   </data>
+  <data name="TransicaoDePedidoInvalida" xml:space="preserve">
+    <value>O pedido está {0} e só pode ser concluído ou recusado enquanto estiver Pending.</value>
+  </data>
+  <data name="PagamentoRecusadoSemMotivo" xml:space="preserve">
+    <value>Pagamento recusado.</value>
+  </data>
 </root>

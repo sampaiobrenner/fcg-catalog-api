@@ -4,6 +4,7 @@ using Fcg.Catalog.Application._Shared.ReadQueries;
 using Fcg.Catalog.Domain._Shared.Modules;
 using Fcg.Catalog.Domain.Games;
 using Fcg.Catalog.Domain.Library;
+using Fcg.Catalog.Domain.Orders;
 using Fcg.Catalog.Domain.Promotions;
 using Fcg.Catalog.Infrastructure._Shared.Context;
 using Fcg.Catalog.Infrastructure._Shared.Context.Seed;
@@ -11,6 +12,7 @@ using Fcg.Catalog.Infrastructure._Shared.Dapper;
 using Fcg.Catalog.Infrastructure._Shared.Messaging;
 using Fcg.Catalog.Infrastructure.Games;
 using Fcg.Catalog.Infrastructure.Library;
+using Fcg.Catalog.Infrastructure.Orders;
 using Fcg.Catalog.Infrastructure.Promotions;
 using Fcg.Catalog.Infrastructure.Properties;
 using Microsoft.EntityFrameworkCore;
@@ -48,5 +50,6 @@ public sealed class FcgCatalogInfrastructureModule : IModule
         services.AddScoped<IGameRepository, GameRepository>();
         services.AddScoped<IPromotionRepository, PromotionRepository>();
         services.AddScoped<ILibraryRepository, LibraryRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
     }
 }

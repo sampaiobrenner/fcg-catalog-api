@@ -109,6 +109,60 @@ namespace Fcg.Catalog.Infrastructure._Shared.Context.Migrations
                     b.ToTable("library_items", (string)null);
                 });
 
+            modelBuilder.Entity("Fcg.Catalog.Domain.Orders.OrderPersistenceModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("game_id");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric(10,2)")
+                        .HasColumnName("price");
+
+                    b.Property<string>("Reason")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)")
+                        .HasColumnName("reason");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("status");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_orders");
+
+                    b.HasIndex("GameId")
+                        .HasDatabaseName("ix_orders_game_id");
+
+                    b.HasIndex("UserId", "CreatedAt")
+                        .HasDatabaseName("ix_orders_user_id_created_at");
+
+                    b.HasIndex("UserId", "GameId")
+                        .IsUnique()
+                        .HasDatabaseName("ux_orders_user_id_game_id_pending")
+                        .HasFilter("status = 'Pending'");
+
+                    b.ToTable("orders", (string)null);
+                });
+
             modelBuilder.Entity("Fcg.Catalog.Domain.Promotions.PromotionGamePersistenceModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -400,6 +454,16 @@ namespace Fcg.Catalog.Infrastructure._Shared.Context.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_library_items_games_game_id");
+                });
+
+            modelBuilder.Entity("Fcg.Catalog.Domain.Orders.OrderPersistenceModel", b =>
+                {
+                    b.HasOne("Fcg.Catalog.Domain.Games.GamePersistenceModel", null)
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_orders_games_game_id");
                 });
 
             modelBuilder.Entity("Fcg.Catalog.Domain.Promotions.PromotionGamePersistenceModel", b =>

@@ -36,4 +36,13 @@
   <data name="PrecoMaximoMenorQueMinimo" xml:space="preserve">
     <value>O preço máximo deve ser maior ou igual ao preço mínimo.</value>
   </data>
+  <data name="Pedido" xml:space="preserve">
+    <value>Pedido</value>
+  </data>
+  <data name="JogoJaNaBiblioteca" xml:space="preserve">
+    <value>Jogo já está na biblioteca.</value>
+  </data>
+  <data name="PedidoEmAndamento" xml:space="preserve">
+    <value>Já existe um pedido em andamento para este jogo.</value>
+  </data>
 </root>
