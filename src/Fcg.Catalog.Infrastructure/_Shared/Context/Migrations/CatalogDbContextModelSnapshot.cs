@@ -22,6 +22,158 @@ namespace Fcg.Catalog.Infrastructure._Shared.Context.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Fcg.Catalog.Domain.Games.GamePersistenceModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean")
+                        .HasColumnName("active");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Genre")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)")
+                        .HasColumnName("genre");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric(10,2)")
+                        .HasColumnName("price");
+
+                    b.Property<DateOnly?>("ReleaseDate")
+                        .HasColumnType("date")
+                        .HasColumnName("release_date");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("title");
+
+                    b.HasKey("Id")
+                        .HasName("pk_games");
+
+                    b.HasIndex("Genre")
+                        .HasDatabaseName("ix_games_genre");
+
+                    b.HasIndex("Title")
+                        .HasDatabaseName("ix_games_title");
+
+                    b.ToTable("games", (string)null);
+                });
+
+            modelBuilder.Entity("Fcg.Catalog.Domain.Library.LibraryItemPersistenceModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("AcquiredAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("acquired_at");
+
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("game_id");
+
+                    b.Property<decimal>("PricePaid")
+                        .HasColumnType("numeric(10,2)")
+                        .HasColumnName("price_paid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_library_items");
+
+                    b.HasIndex("GameId")
+                        .HasDatabaseName("ix_library_items_game_id");
+
+                    b.HasIndex("UserId", "GameId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_library_items_user_id_game_id");
+
+                    b.ToTable("library_items", (string)null);
+                });
+
+            modelBuilder.Entity("Fcg.Catalog.Domain.Promotions.PromotionGamePersistenceModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("game_id");
+
+                    b.Property<Guid>("PromotionId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("promotion_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_promotion_games");
+
+                    b.HasIndex("GameId")
+                        .HasDatabaseName("ix_promotion_games_game_id");
+
+                    b.HasIndex("PromotionId", "GameId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_promotion_games_promotion_id_game_id");
+
+                    b.ToTable("promotion_games", (string)null);
+                });
+
+            modelBuilder.Entity("Fcg.Catalog.Domain.Promotions.PromotionPersistenceModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean")
+                        .HasColumnName("active");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<decimal>("DiscountPercent")
+                        .HasColumnType("numeric(5,2)")
+                        .HasColumnName("discount_percent");
+
+                    b.Property<DateTime>("EndsAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ends_at");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)")
+                        .HasColumnName("name");
+
+                    b.Property<DateTime>("StartsAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("starts_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_promotions");
+
+                    b.ToTable("promotions", (string)null);
+                });
+
             modelBuilder.Entity("MassTransit.EntityFrameworkCoreIntegration.InboxState", b =>
                 {
                     b.Property<long>("Id")
@@ -240,6 +392,33 @@ namespace Fcg.Catalog.Infrastructure._Shared.Context.Migrations
                     b.ToTable("outbox_state", (string)null);
                 });
 
+            modelBuilder.Entity("Fcg.Catalog.Domain.Library.LibraryItemPersistenceModel", b =>
+                {
+                    b.HasOne("Fcg.Catalog.Domain.Games.GamePersistenceModel", null)
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_library_items_games_game_id");
+                });
+
+            modelBuilder.Entity("Fcg.Catalog.Domain.Promotions.PromotionGamePersistenceModel", b =>
+                {
+                    b.HasOne("Fcg.Catalog.Domain.Games.GamePersistenceModel", null)
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_promotion_games_games_game_id");
+
+                    b.HasOne("Fcg.Catalog.Domain.Promotions.PromotionPersistenceModel", null)
+                        .WithMany("Games")
+                        .HasForeignKey("PromotionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_promotion_games_promotions_promotion_id");
+                });
+
             modelBuilder.Entity("MassTransit.EntityFrameworkCoreIntegration.OutboxMessage", b =>
                 {
                     b.HasOne("MassTransit.EntityFrameworkCoreIntegration.OutboxState", null)
@@ -252,6 +431,11 @@ namespace Fcg.Catalog.Infrastructure._Shared.Context.Migrations
                         .HasForeignKey("InboxMessageId", "InboxConsumerId")
                         .HasPrincipalKey("MessageId", "ConsumerId")
                         .HasConstraintName("fk_outbox_message_inbox_state_inbox_message_id_inbox_consumer_");
+                });
+
+            modelBuilder.Entity("Fcg.Catalog.Domain.Promotions.PromotionPersistenceModel", b =>
+                {
+                    b.Navigation("Games");
                 });
 #pragma warning restore 612, 618
         }

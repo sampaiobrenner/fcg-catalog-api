@@ -36,4 +36,7 @@
   <data name="ChaveJwtInvalida" xml:space="preserve">
     <value>A chave JWT (Jwt__Key) deve possuir ao menos {0} caracteres.</value>
   </data>
+  <data name="RegistroDuplicado" xml:space="preserve">
+    <value>O registro já existe ou foi alterado por outra requisição em andamento.</value>
+  </data>
 </root>

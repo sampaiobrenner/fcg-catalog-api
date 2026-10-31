@@ -7,6 +7,7 @@ using Fcg.Catalog.WebApi._Shared.Errors;
 using Fcg.Catalog.WebApi._Shared.HealthChecks;
 using Fcg.Catalog.WebApi._Shared.Messaging;
 using Fcg.Catalog.WebApi._Shared.Security;
+using Fcg.Catalog.WebApi.Games.GraphQL;
 
 namespace Fcg.Catalog.WebApi;
 
@@ -27,6 +28,11 @@ public sealed class FcgCatalogWebApiModule : IModule
 
         services.AddHealthChecks()
             .AddDbContextCheck<CatalogDbContext>("postgres", tags: [HealthCheckTags.Ready]);
+
+        services.AddGraphQLServer()
+            .AddQueryType<GameQuery>()
+            .AddFiltering()
+            .AddSorting();
 
         services.AddEndpoints(typeof(FcgCatalogWebApiModule).Assembly);
     }

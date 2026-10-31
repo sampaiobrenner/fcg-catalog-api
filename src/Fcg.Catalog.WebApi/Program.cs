@@ -33,6 +33,7 @@ app.MapOpenApi();
 app.MapScalarApiReference();
 app.MapHealthEndpoints();
 app.MapEndpoints();
+app.MapGraphQL();
 
 await app.RunAsync();
 

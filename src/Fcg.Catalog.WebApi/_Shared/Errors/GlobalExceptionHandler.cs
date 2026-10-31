@@ -4,6 +4,8 @@ using Fcg.Catalog.WebApi.Properties;
 using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace Fcg.Catalog.WebApi._Shared.Errors;
 
@@ -28,6 +30,8 @@ internal sealed class GlobalExceptionHandler : IExceptionHandler
             NotFoundException => (StatusCodes.Status404NotFound, WebApiResources.RecursoNaoEncontrado),
             ConflictException => (StatusCodes.Status409Conflict, WebApiResources.ConflitoDeEstado),
             BusinessException => (StatusCodes.Status422UnprocessableEntity, WebApiResources.RegraDeNegocioViolada),
+            DbUpdateException { InnerException: PostgresException { SqlState: PostgresErrorCodes.UniqueViolation } }
+                => (StatusCodes.Status409Conflict, WebApiResources.ConflitoDeEstado),
             _ => (StatusCodes.Status500InternalServerError, WebApiResources.ErroInesperado)
         };
 
@@ -38,7 +42,7 @@ internal sealed class GlobalExceptionHandler : IExceptionHandler
         {
             Status = status,
             Title = title,
-            Detail = status == StatusCodes.Status500InternalServerError ? null : exception.Message
+            Detail = DetailFor(status, exception)
         };
 
         if (exception is ValidationException validationException)
@@ -57,4 +61,12 @@ internal sealed class GlobalExceptionHandler : IExceptionHandler
             Exception = exception
         });
     }
+
+    // Violacao de indice unico (corrida entre requisicoes concorrentes) nao expoe a mensagem do EF.
+    private static string? DetailFor(int status, Exception exception) => exception switch
+    {
+        _ when status == StatusCodes.Status500InternalServerError => null,
+        DbUpdateException => WebApiResources.RegistroDuplicado,
+        _ => exception.Message
+    };
 }
